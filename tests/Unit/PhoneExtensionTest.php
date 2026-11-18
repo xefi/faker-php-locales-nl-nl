@@ -43,7 +43,17 @@ final class PhoneExtensionTest extends TestCase
     public function testSpacedIndicatoredCellPhoneNumberFormat(): void
     {
         for ($i = 0; $i < 100; $i++) {
-            $this->assertMatchesRegularExpression('/^\+316( \d{8}| \d{2} \d{2} \d{2} \d{2})$/', $this->faker->spacedIndicatoredCellPhoneNumber());
+            $this->assertMatchesRegularExpression('/^\+31 6( \d{8}| \d{2} \d{2} \d{2} \d{2})$/', $this->faker->spacedIndicatoredCellPhoneNumber());
+        }
+    }
+
+    public function testIndicatorIsSeparatedFromTheNumber(): void
+    {
+        for ($i = 0; $i < 100; $i++) {
+            $this->assertStringStartsWith('+31 ', $this->faker->spacedIndicatoredPhoneNumber());
+            $this->assertStringStartsWith('+31-', $this->faker->dashedIndicatoredPhoneNumber());
+            $this->assertStringStartsWith('+31.', $this->faker->dottedIndicatoredPhoneNumber());
+            $this->assertMatchesRegularExpression('/^\+31\d+$/', $this->faker->indicatoredPhoneNumber());
         }
     }
 }
